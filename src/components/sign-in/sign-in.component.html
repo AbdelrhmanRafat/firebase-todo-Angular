@@ -1,0 +1,32 @@
+<section class="bg-main vh-100">
+   <div class="w-75 mx-auto">
+    <div class="vh-100 d-flex flex-column justify-content-center align-items-center">
+     <div class="d-flex flex-column justify-content-center align-items-center gap-3">
+        <h2>Login</h2>
+        <button class="enlarge btn btn-light shadow p-3 px-5 rounded rounded-pill"><i class="fa-brands fa-google px-2"></i>Login with Gmail</button>
+     </div>
+     <h2 class="pt-5 pb-2">Login with Email</h2>
+     <form class="d-flex flex-column justify-content-center align-items-center gap-3" [formGroup]="SignInForm" (ngSubmit)="SignIn()">
+      <input
+autocomplete="off"
+formControlName= "email"
+placeholder="Email"
+type="email"
+class="Fenlarge input-group  rounded rounded-pill border border-0"
+/>
+<input
+autocomplete="off"
+formControlName= "password"
+placeholder="password"
+type="password"
+class="Fenlarge input-group  rounded rounded-pill border border-0"
+/>
+        <button class="enlarge btn btn-secondary p-3 px-5 rounded rounded-pill">Login</button>
+     </form>
+     <div class="text-center">
+        <p class="text-muted">Don't Have an acount</p>
+        <a routerLink="/signup" class="text-decoration-underline text-black text-capitalize">Sign Up Now</a>
+       </div>
+     </div>
+     </div>
+</section>
