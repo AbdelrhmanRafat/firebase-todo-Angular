@@ -6,6 +6,7 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth'; // Import provideAuth and getAuth
 import { NgxFontAwesomeComponent } from 'ngx-font-awesome/lib/ngx-font-awesome.component';
 import { NgxFontAwesomeModule } from 'ngx-font-awesome';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAcFySvgVUJt_fWJgZPY087l3UYrLAJAP0",
@@ -22,6 +23,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideAuth(() => getAuth()), // Provide the Auth service here
+    provideAuth(() => getAuth()), provideAnimationsAsync(), // Provide the Auth service here
   ]
 };

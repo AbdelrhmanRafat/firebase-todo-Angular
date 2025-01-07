@@ -1,0 +1,30 @@
+h2 {
+    color: white;
+    padding: 10px 40px 70px;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    text-align: center;
+    margin: 0px;
+}
+.add-todo-pos {
+    position: absolute;
+    top: 70px;
+    left: 50%; /* Position the item at the center of its parent */
+    transform: translateX(-50%); /* Shift the item back by 50% of its width */
+    width: 88%; /* Maintain the desired width */
+}
+.todo-list-pos {
+    position: absolute;
+    top: 250px;
+    left: 50%; /* Position the item at the center of its parent */
+    transform: translateX(-50%); /* Shift the item back by 50% of its width */
+    width: 88%; /* Maintain the desired width */  
+}
+.btn-pos {
+    position: absolute;
+    top: 5px;
+    right: 30px;
+    color: white;
+    border: 2px solid white;
+    border-radius: 20px;
+}

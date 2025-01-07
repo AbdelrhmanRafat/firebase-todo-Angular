@@ -1,0 +1,11 @@
+.customInput {
+    border: 0;
+    width: 88%;
+    border-bottom: 4px rgb(91, 91, 168) solid;
+    background-color: transparent;
+}
+.customInput:focus {
+    border: 0;
+    border-bottom: 4px rgb(91, 91, 168) solid;
+    outline: none;
+}
