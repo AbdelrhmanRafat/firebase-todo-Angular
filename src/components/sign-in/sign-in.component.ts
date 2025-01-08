@@ -31,11 +31,11 @@ export class SignInComponent  {
       }
     })
   }
-  signOut() {
-  this._AuthService.logout().subscribe({
-    next : (res) => {
-       console.log("Logged Out");
+  SignInWithGmail(){
+  this._AuthService.signInWithGoogle().subscribe({
+    next : () => {
+      this._Router.navigate(['/todohome']);
     }
-  });
+  })
   }
 }

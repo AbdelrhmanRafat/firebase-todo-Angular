@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/Services/auth.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-sign-up',
   standalone: true,
@@ -13,6 +13,7 @@ export class SignUpComponent {
 
   private readonly _FormBuilder = inject(FormBuilder);
   private readonly _AuthService = inject(AuthService);
+  private _Router = inject(Router);
   SignUpForm : FormGroup = this._FormBuilder.nonNullable.group({
     username : ['',[Validators.required]],
     email : ['',[Validators.required,Validators.email]],
@@ -24,8 +25,8 @@ export class SignUpComponent {
     rawData.email,
     rawData.password,
     rawData.username).subscribe(
-      () => {
-        console.log("OK");
+      (res) => {
+        this._Router.navigate(['/signin']);
       })
   }
 }

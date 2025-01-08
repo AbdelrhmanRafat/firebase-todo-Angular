@@ -4,9 +4,9 @@ import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth'; // Import provideAuth and getAuth
-import { NgxFontAwesomeComponent } from 'ngx-font-awesome/lib/ngx-font-awesome.component';
-import { NgxFontAwesomeModule } from 'ngx-font-awesome';
+import {provideFirestore, getFirestore} from '@angular/fire/firestore'
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyAcFySvgVUJt_fWJgZPY087l3UYrLAJAP0",
@@ -22,7 +22,9 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideClientHydration(),
+    provideAnimationsAsync(),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideAuth(() => getAuth()), provideAnimationsAsync(), // Provide the Auth service here
+    provideAuth(() => getAuth()),  // Provide the Auth service here
+    provideFirestore(() => getFirestore())
   ]
 };

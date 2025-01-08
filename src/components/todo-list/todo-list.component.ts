@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TodoListItemComponent } from "../../shared/UI/todo-list-item/todo-list-item.component";
 import { MatTabsModule } from '@angular/material/tabs';
+import { TodoData } from '../../core/Interfaces/todo-data';
+import { TodoService } from '../../core/Services/todo.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-todo-list',
@@ -9,23 +12,19 @@ import { MatTabsModule } from '@angular/material/tabs';
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss']
 })
-export class TodoListComponent {
-  todoList: string[] = [];
+export class TodoListComponent implements OnInit {
+  
+  todos: TodoData[] = [];
+  error : string = "";
+  private _TodoService = inject(TodoService);
 
-  constructor() {
-    this.getAllTasks(); // Initialize the list with "All" tasks
-  }
+    getAllTasks() {
 
-  getAllTasks() {
-    this.todoList = ["go to gym", "start studying"];
-  }
-
+  } 
   getClosedTasks() {
-    this.todoList = ["go to gym 2", "start studying 2"];
   }
 
   getOpenedTasks() {
-    this.todoList = ["go to gym 3", "start studying 3"];
   }
 
   onTabChange(event: any) {
@@ -42,5 +41,11 @@ export class TodoListComponent {
       default:
         break;
     }
+  }
+  ngOnInit() {
+    this._TodoService.getTodos().subscribe({
+      next: (todos) => this.todos = todos,
+      error: (err) => console.log(err)
+    });
   }
 }
