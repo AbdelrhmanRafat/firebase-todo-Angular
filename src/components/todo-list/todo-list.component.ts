@@ -2,8 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { TodoListItemComponent } from "../../shared/UI/todo-list-item/todo-list-item.component";
 import { MatTabsModule } from '@angular/material/tabs';
 import { error } from 'console';
-import { todos } from '../../core/Interfaces/todo-data';
 import { TodosService } from '../../core/Services/todo.service';
+import { todos } from '../../core/Interfaces/todos';
 
 @Component({
   selector: 'app-todo-list',
@@ -15,11 +15,20 @@ import { TodosService } from '../../core/Services/todo.service';
 export class TodoListComponent implements OnInit {
   
   todos: todos[] = [];
+  private _TodosService = inject(TodosService);
   error : string = "";
-  private _TodoService = inject(TodosService);
+  
 
-    getAllTasks() {
-
+  getAllTasks() {
+    this._TodosService.getTodos().subscribe({
+      next : (todos) => {
+        this.todos = todos;
+        console.log(this.todos);
+      },
+      error : (error) => {
+         console.log(error);
+      }
+    })
   } 
   getClosedTasks() {
   }
@@ -43,5 +52,6 @@ export class TodoListComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.getAllTasks();
   }
 }

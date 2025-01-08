@@ -11,7 +11,7 @@ import { TodosService } from '../../core/Services/todo.service';
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss'
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent {
   private readonly _FormBuilder = inject(FormBuilder);
   private readonly _AuthService = inject(AuthService);
   private  _Router = inject(Router);
@@ -39,16 +39,6 @@ export class SignInComponent implements OnInit {
       this._Router.navigate(['/todohome']);
     }
   })
-  }
-  ngOnInit(): void {
-    this._TodosService.getTodos().subscribe({
-      next : () => {
-       console.log("OK")
-      },
-      error : () => {
-       console.log("Error");
-      }
-    })
   }
 
 }
