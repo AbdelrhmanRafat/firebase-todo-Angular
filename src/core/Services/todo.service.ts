@@ -1,13 +1,20 @@
-import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { inject, Injectable } from '@angular/core';
+import { collection, collectionData, Firestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { todos } from '../Interfaces/todos';
 
-@Injectable({ providedIn: 'root' })
-export class TodoService {
-  private firestore = inject(Firestore);
-  private todosCollection = collection(this.firestore, 'todos');
+@Injectable({
+  providedIn: 'root'
+})
+export class TodosService {
 
-  getTodos(): Observable<any[]> { // Use any[] for now for simplicity
-    return collectionData(this.todosCollection, { idField: 'id' });
+  private _Firestore = inject(Firestore);
+  todosCollection = collection(this._Firestore,"todos");
+  getTodos() : Observable<todos[]> {
+    return collectionData(this.todosCollection,
+      {
+        idField : "id"
+      }
+    ) as Observable<todos[]>
   }
 }

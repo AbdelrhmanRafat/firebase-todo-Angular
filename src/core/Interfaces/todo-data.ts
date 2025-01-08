@@ -1,5 +1,5 @@
-export interface TodoData {
-  id?: string; // Auto-generated ID from Firestore
-  isCompleted: boolean;
-  task: string;
-}
+// export interface todos {
+//   id?: string; // Auto-generated ID from Firestore
+//   isCompleted: boolean;
+//   task: string;
+// }

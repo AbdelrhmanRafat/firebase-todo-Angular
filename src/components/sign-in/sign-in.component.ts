@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/Services/auth.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { TodosService } from '../../core/Services/todo.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,10 +11,11 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss'
 })
-export class SignInComponent  {
+export class SignInComponent implements OnInit {
   private readonly _FormBuilder = inject(FormBuilder);
   private readonly _AuthService = inject(AuthService);
   private  _Router = inject(Router);
+  private _TodosService = inject(TodosService);
   SignInForm : FormGroup = this._FormBuilder.group({
     email : [null,[Validators.required,Validators.email]],
     password : [null,[Validators.required]]
@@ -38,4 +40,15 @@ export class SignInComponent  {
     }
   })
   }
+  ngOnInit(): void {
+    this._TodosService.getTodos().subscribe({
+      next : () => {
+       console.log("OK")
+      },
+      error : () => {
+       console.log("Error");
+      }
+    })
+  }
+
 }
