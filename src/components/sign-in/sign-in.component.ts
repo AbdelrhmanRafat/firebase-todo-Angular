@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../core/Services/auth.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TodosService } from '../../core/Services/todo.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,8 +15,8 @@ import { TodosService } from '../../core/Services/todo.service';
 export class SignInComponent {
   private readonly _FormBuilder = inject(FormBuilder);
   private readonly _AuthService = inject(AuthService);
+  private toaster = inject(ToastrService);
   private  _Router = inject(Router);
-  private _TodosService = inject(TodosService);
   SignInForm : FormGroup = this._FormBuilder.group({
     email : [null,[Validators.required,Validators.email]],
     password : [null,[Validators.required]]
@@ -26,16 +27,17 @@ export class SignInComponent {
     rawData.email,
     rawData.password).subscribe({
       next : (res) => {
+        console.log(res);
+        this.toaster.success("Signed in Successfully");
         this._Router.navigate(['/todohome']);
-      },
-      error : (err) => {
-        console.log(err);
       }
     })
   }
   SignInWithGmail(){
   this._AuthService.signInWithGoogle().subscribe({
-    next : () => {
+    next : (res) => {
+      console.log(res);
+      this.toaster.success("Signed in Successfully");
       this._Router.navigate(['/todohome']);
     }
   })

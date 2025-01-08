@@ -23,7 +23,6 @@ export class TodoListComponent implements OnInit {
     this._TodosService.getTodos().subscribe({
       next : (todos) => {
         this.todos = todos;
-        console.log(this.todos);
       },
       error : (error) => {
          console.log(error);

@@ -13,13 +13,14 @@ import {
   User
 } from '@angular/fire/auth';
 import { BehaviorSubject, from, Observable } from 'rxjs';
+import { FirebaseWrapperService } from '../wrapper/firebase-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private fireBaseAuth = inject(Auth);
-
+  private wrapper = inject(FirebaseWrapperService);
   private userSubject = new BehaviorSubject<User | null>(null);
   public $user = this.userSubject.asObservable();
 
@@ -45,7 +46,7 @@ export class AuthService {
   // Login with email and password
   signIn(email: string, password: string): Observable<any> {
     const promise = signInWithEmailAndPassword(this.fireBaseAuth, email, password);
-    return from(promise);
+    return this.wrapper.wrapRequest(promise);
   }
 
   // Login with Google account

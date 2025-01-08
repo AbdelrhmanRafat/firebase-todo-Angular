@@ -1,9 +1,13 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withHashLocation, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 import { routes } from './app.routes';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideClientHydration } from '@angular/platform-browser';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr } from 'ngx-toastr';
 
 
 const firebaseConfig = {
@@ -18,7 +22,17 @@ const firebaseConfig = {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
+    provideRouter(routes,
+      withHashLocation(),
+      withViewTransitions(),
+      withInMemoryScrolling({
+       scrollPositionRestoration : 'top'
+      }),
+     ),
+    provideAnimations(), // required animations providers
+    provideToastr(), // Toastr providers
+    provideClientHydration(),
+    provideAnimationsAsync(),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth()),  // Provide the Auth service here
     provideFirestore(() => getFirestore())
