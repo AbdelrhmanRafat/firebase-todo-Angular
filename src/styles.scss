@@ -50,9 +50,12 @@ $firebase-todo-theme: mat.define-light-theme((
   font-family: Oswald-Medium;
   src: url(assets/Fonts/Oswald-VariableFont_wght.ttf);
 }
+html, body { height: 100%; }
 body {
+  margin: 0;
   font-family: Oswald-Medium;
 }
+
 .bg-main {
   background-color: var(--bg-main);
 }
@@ -85,5 +88,3 @@ input {
 input::placeholder  {
   color: black !important;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

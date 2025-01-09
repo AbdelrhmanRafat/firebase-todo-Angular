@@ -12,6 +12,7 @@ export const routes: Routes = [
   {
     path: '',
     component: AuthLayoutComponent,
+    canActivate : [isUserLoggedGuard],
     children: [
       { path: '', redirectTo: 'signin', pathMatch: 'full' },
       { path: 'signin', component: SignInComponent },
@@ -21,6 +22,7 @@ export const routes: Routes = [
   {
     path: '',
     component: TodoLayoutComponent,
+    canActivate : [isUserNotLoggedGuard],
     children: [
       { path: '', redirectTo: 'todohome', pathMatch: 'full' },
       { path: 'todohome', component: TodoComponent },

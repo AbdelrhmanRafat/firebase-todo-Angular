@@ -1,19 +1,19 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router, UrlTree } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../Services/auth.service';
 import { map } from 'rxjs';
 
 export const isUserNotLoggedGuard: CanActivateFn = () => {
-  const _Router = inject(Router);
-  const _AuthService = inject(AuthService);
+  const authService = inject(AuthService);
+  const router = inject(Router);
 
-  return _AuthService.$user.pipe(
+  return authService.isLoggedIn().pipe(
     map((user) => {
-      if (!user) {
-        // Redirect to 'signin' if not logged in
-        return _Router.createUrlTree(['/signin']);
+      if (user) {
+        return true; // Allow access to authenticated routes
+      } else {
+        return router.createUrlTree(['/signin']); // Redirect to sign-in if not logged in
       }
-      return true; // Allow access to Todo routes if logged in
     })
   );
 };

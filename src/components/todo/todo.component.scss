@@ -1,14 +1,17 @@
-h2 {
+.main-card {
     color: white;
     padding: 10px 40px 70px;
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
     text-align: center;
     margin: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
 }
 .add-todo-pos {
     position: absolute;
-    top: 70px;
+    top: 90px;
     left: 50%; /* Position the item at the center of its parent */
     transform: translateX(-50%); /* Shift the item back by 50% of its width */
     width: 88%; /* Maintain the desired width */
@@ -20,10 +23,7 @@ h2 {
     transform: translateX(-50%); /* Shift the item back by 50% of its width */
     width: 88%; /* Maintain the desired width */  
 }
-.btn-pos {
-    position: absolute;
-    top: 5px;
-    right: 30px;
+.btn-design {
     color: white;
     border: 2px solid white;
     border-radius: 20px;
@@ -31,4 +31,4 @@ h2 {
 
 .min-vh-200 {
     height: 200vh;
-}
+}   

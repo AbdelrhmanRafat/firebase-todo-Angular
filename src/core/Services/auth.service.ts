@@ -8,40 +8,52 @@ import {
   sendPasswordResetEmail, 
   sendEmailVerification, 
   updateProfile, 
-  user,
   onAuthStateChanged,
-  User
+  User,
+  user
 } from '@angular/fire/auth';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { FirebaseWrapperService } from '../wrapper/firebase-wrapper.service';
+import { doc, Firestore, setDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private fireBaseAuth = inject(Auth);
+  private fireBaseFireStore = inject(Firestore);
   private wrapper = inject(FirebaseWrapperService);
   private userSubject = new BehaviorSubject<User | null>(null);
-  public $user = this.userSubject.asObservable();
+  public user$: Observable<User | null> = this.userSubject.asObservable();
 
-  constructor() {
-    onAuthStateChanged(this.fireBaseAuth, (user) => {
+  constructor(private auth: Auth) {
+    onAuthStateChanged(this.auth, (user) => {
       this.userSubject.next(user);
     });
   }
+
+  isLoggedIn(): Observable<User | null> {
+    return this.user$;
+  }
+
   // Register a new user
   register(email: string, password: string, username: string): Observable<void> {
     const promise = createUserWithEmailAndPassword(this.fireBaseAuth, email, password)
       .then(response => {
-        // Update user's display name
-        return updateProfile(response.user, { displayName: username })
-          .then(() => {
-            // Send email verification after registration
-            return sendEmailVerification(response.user);
+        const userId = response.user.uid; // Get UserID
+        const userDocRef = doc(this.fireBaseFireStore, 'users', userId); // Create a doc reference with UserID
+            // Add UserID to Firestore `users` collection
+            return setDoc(userDocRef, { userID: userId }).then(() => {
+              // Update user's display name
+              return updateProfile(response.user, { displayName: username }).then(() => {
+                // Send email verification after registration
+                return sendEmailVerification(response.user);
+              });
+            });
           });
-      });
-    return from(promise);
+    return this.wrapper.wrapRequest(promise);
   }
+
 
   // Login with email and password
   signIn(email: string, password: string): Observable<any> {
@@ -49,17 +61,25 @@ export class AuthService {
     return this.wrapper.wrapRequest(promise);
   }
 
-  // Login with Google account
   signInWithGoogle(): Observable<any> {
     const provider = new GoogleAuthProvider();
-    const promise = signInWithPopup(this.fireBaseAuth, provider);
-    return from(promise);
+    const promise = signInWithPopup(this.fireBaseAuth, provider).then(response => {
+      const userId = response.user.uid; // Get UserID
+      const userDocRef = doc(this.fireBaseFireStore, 'users', userId); // Create a doc reference with UserID
+  
+      // Add UserID to Firestore `users` collection if it doesn't already exist
+      return setDoc(userDocRef, { userID: userId }, { merge: true }).then(() => {
+        return response; // Return original response
+      });
+    });
+    return this.wrapper.wrapRequest(promise);
   }
+  
 
   // Send password reset email
   resetPassword(email: string): Observable<void> {
     const promise = sendPasswordResetEmail(this.fireBaseAuth, email);
-    return from(promise);
+    return this.wrapper.wrapRequest(promise);
   }
 
   // Resend email verification
@@ -71,7 +91,7 @@ export class AuthService {
     }
 
     const promise = sendEmailVerification(user);
-    return from(promise);
+    return this.wrapper.wrapRequest(promise);
   }
 
   // Get current authenticated user
@@ -82,6 +102,6 @@ export class AuthService {
   // Logout user
   logout(): Observable<void> {
     const promise = this.fireBaseAuth.signOut();
-    return from(promise);
+    return this.wrapper.wrapRequest(promise)
   }
 }

@@ -1,7 +1,10 @@
 <section class="container my-5 position-relative">
-        <h2 class="bg-main-gradient z-1">TODO LIST</h2>
+        <div class="bg-main-gradient z-1 main-card">
+        <p>Hello {{userName}}</p>
+        <h2 class="text-center">TODO LIST</h2>
+        <button class="btn btn-design" (click)="signOut()">logout</button>
+        </div>
         <app-add-todo class="add-todo-pos z-3"></app-add-todo>
-        <button class="btn btn-pos" (click)="signOut()">logout</button>
         <div class="bg-main min-vh-200 position-relative z-0"> 
          <app-todo-list class="todo-list-pos"></app-todo-list>
         </div>
