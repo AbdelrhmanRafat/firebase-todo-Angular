@@ -1,9 +1,16 @@
 <div class="row text-start p-3 mt-5 border-bottom">
-<div class="col-6">{{task}}</div>
-<div class="col-3 text-center">
-    <button class="btn btn-primary">closed</button>
-</div>
-<div class="col-3 text-center">
-    <mat-chip-option selected>trash</mat-chip-option>
+<div class="col-9">{{todo.task}}</div>
+<div class="col-3 d-flex justify-content-end gap-2 align-items-start">
+    <button
+     [ngClass]="changeButtonStyle()"
+     class="btn" 
+     (click)="UpdateTodo()">
+     {{todo.isCompleted ? "open" : "close"}}
+    </button>
+    <button class="btn" (click)="DeleteTodo()">
+        <i 
+        [ngClass]="changeTextStyle()"
+        class="fa-solid fa-trash text-danger"></i>
+    </button>
 </div>
 </div>

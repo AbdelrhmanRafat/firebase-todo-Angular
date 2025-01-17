@@ -35,6 +35,9 @@ export class AuthService {
   isLoggedIn(): Observable<User | null> {
     return this.user$;
   }
+  get currentUser(): User | null {
+    return this.userSubject.value;
+  }
 
   // Register a new user
   register(email: string, password: string, username: string): Observable<void> {

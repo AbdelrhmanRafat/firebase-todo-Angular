@@ -20,7 +20,6 @@ export class AddTodoComponent implements OnInit {
    addNewTodo(){
     this._TodosService.addTodo(this.userID,this.newTodo).subscribe({
       next : () => {
-        this.newTodo = '';
         this.toaster.success("New Todo Added");
       }
     })

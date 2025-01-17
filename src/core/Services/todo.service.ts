@@ -10,7 +10,7 @@ import {
   setDoc, 
   where
 } from '@angular/fire/firestore';
-import { from, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { todos } from '../Interfaces/todos';
 import { FirebaseWrapperService } from '../wrapper/firebase-wrapper.service';
 

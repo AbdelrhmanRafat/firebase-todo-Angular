@@ -18,7 +18,7 @@ export class TodoListComponent implements OnInit {
   todos: todos[] = [];
   private _TodosService = inject(TodosService);
   private _AuthService = inject(AuthService);
-  private userID : string = "";
+  userID : string = "";
   error : string = "";
   
 
@@ -36,7 +36,6 @@ export class TodoListComponent implements OnInit {
       }
     })
   }
-
   getOpenedTasks(userID : string) {
     this._TodosService.getPendingTodos(userID).subscribe({
       next : (todos) => {
@@ -44,7 +43,6 @@ export class TodoListComponent implements OnInit {
       }
     })
   }
-
   onTabChange(event: any) {
     switch (event.index) {
       case 0:
