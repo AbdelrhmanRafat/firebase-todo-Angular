@@ -10,5 +10,4 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './todo-layout.component.scss'
 })
 export class TodoLayoutComponent {
-
 }
