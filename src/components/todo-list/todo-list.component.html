@@ -9,13 +9,13 @@
         </mat-tab>
         <mat-tab label="Closed">
             <p class="header-text">Task</p>
-            @for (task of todos; track $index) {
+            @for (task of closedTodos; track $index) {
                 <app-todo-list-item [todo]="task" [userID]="userID"></app-todo-list-item>
             }
         </mat-tab>
         <mat-tab label="Opened">
             <p class="header-text">Task</p>
-            @for (task of todos; track $index) {
+            @for (task of openedTodos; track $index) {
                 <app-todo-list-item [todo]="task" [userID]="userID"></app-todo-list-item>
             }
         </mat-tab>

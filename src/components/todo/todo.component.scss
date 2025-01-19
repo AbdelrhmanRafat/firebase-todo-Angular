@@ -17,7 +17,8 @@
     width: 88%; /* Maintain the desired width */
 }
 .todo-list-pos {
-    position: absolute;
+    position: relative;
+    display: block;
     top: 150px;
     left: 50%; /* Position the item at the center of its parent */
     transform: translateX(-50%); /* Shift the item back by 50% of its width */
@@ -32,3 +33,13 @@
 .min-vh-200 {
     height: 200vh;
 }   
+.bg-main {
+    min-height: 100%; /* Ensures it stretches to at least the viewport height */
+    height: auto;     /* Adapts to content height */
+    overflow: scroll; /* Prevents content overflow */
+    padding-bottom: 170px;
+  }  
+.container-height {
+  min-height: 100%;
+  height: auto;
+}

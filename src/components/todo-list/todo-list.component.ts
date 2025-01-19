@@ -16,6 +16,8 @@ import { AuthService } from '../../core/Services/auth.service';
 export class TodoListComponent implements OnInit {
   
   todos: todos[] = [];
+  closedTodos : todos[] = [];
+  openedTodos : todos[] = [];
   private _TodosService = inject(TodosService);
   private _AuthService = inject(AuthService);
   userID : string = "";
@@ -28,18 +30,33 @@ export class TodoListComponent implements OnInit {
         this.todos = todos;
       }
     })
+    this._TodosService.alltodos.subscribe({
+      next : (res) => {
+      this.todos = res;
+      }
+    })
   } 
   getClosedTasks(userID : string) {
     this._TodosService.getCompletedTodos(userID).subscribe({
       next : (todos) => {
-        this.todos = todos;
+        this.closedTodos = todos;
+      }
+    })
+    this._TodosService.closedtodos.subscribe({
+      next : (res) => {
+      this.closedTodos = res;
       }
     })
   }
   getOpenedTasks(userID : string) {
     this._TodosService.getPendingTodos(userID).subscribe({
       next : (todos) => {
-        this.todos = todos;
+        this.openedTodos = todos;
+      }
+    })
+    this._TodosService.openedtodos.subscribe({
+      next : (res) => {
+      this.openedTodos = res;
       }
     })
   }

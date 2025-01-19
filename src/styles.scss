@@ -50,7 +50,9 @@ $firebase-todo-theme: mat.define-light-theme((
   font-family: Oswald-Medium;
   src: url(assets/Fonts/Oswald-VariableFont_wght.ttf);
 }
-html, body { height: 100%; }
+html, body, .container {
+  height: 100%; /* Ensure the parent elements stretch. */
+}
 body {
   margin: 0;
   font-family: Oswald-Medium;

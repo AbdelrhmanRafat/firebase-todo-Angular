@@ -23,7 +23,14 @@ export class AddTodoComponent implements OnInit {
         this.toaster.success("New Todo Added");
       }
     })
+    this._TodosService.getTodos(this.userID).subscribe({
+      next : (res) => {
+        this._TodosService.alltodos.next(res);
+      }
+    })
+    this.newTodo = "";
    }
+
    ngOnInit(): void {
     this.userID = this._AuthService.getCurrentUser()?.uid || "";
    }

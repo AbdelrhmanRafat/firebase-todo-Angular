@@ -1,6 +1,10 @@
 <div class="row text-start p-3 mt-5 border-bottom">
-<div class="col-9">{{todo.task}}</div>
-<div class="col-3 d-flex justify-content-end gap-2 align-items-start">
+    <div class="col-6 col-md-9" style="word-wrap: break-word; overflow-wrap: break-word;">
+        <p class="w-100 text-wrap m-0" style="word-break: break-word;">
+          {{ todo.task }}
+        </p>
+      </div>
+  <div class="col-6 col-md-3 d-flex justify-content-end gap-2 align-items-center">
     <button
      [ngClass]="changeButtonStyle()"
      class="btn" 

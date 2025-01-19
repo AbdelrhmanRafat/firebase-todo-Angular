@@ -10,7 +10,7 @@ import {
   setDoc, 
   where
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { todos } from '../Interfaces/todos';
 import { FirebaseWrapperService } from '../wrapper/firebase-wrapper.service';
 
@@ -21,6 +21,9 @@ export class TodosService {
 
   private _Firestore = inject(Firestore);
   private wrapper = inject(FirebaseWrapperService);
+  alltodos = new BehaviorSubject<todos[] | []>([]);
+  closedtodos = new BehaviorSubject<todos[] | []>([]);
+  openedtodos = new BehaviorSubject<todos[] | []>([]);
 
   /**
    * Get todos for a specific user
