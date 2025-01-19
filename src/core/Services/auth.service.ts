@@ -1,23 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { 
-  Auth, 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
-  signInWithPopup, 
-  GoogleAuthProvider, 
-  sendPasswordResetEmail, 
-  sendEmailVerification, 
-  updateProfile, 
-  onAuthStateChanged,
-  User,
-  user
-} from '@angular/fire/auth';
-import { BehaviorSubject, from, Observable } from 'rxjs';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail, sendEmailVerification, updateProfile, onAuthStateChanged, User, setPersistence, browserLocalPersistence } from '@angular/fire/auth';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { FirebaseWrapperService } from '../wrapper/firebase-wrapper.service';
-import { doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private fireBaseAuth = inject(Auth);
@@ -27,17 +15,28 @@ export class AuthService {
   public user$: Observable<User | null> = this.userSubject.asObservable();
 
   constructor(private auth: Auth) {
+    this.setPersistence();  // Ensure persistence is set
     onAuthStateChanged(this.auth, (user) => {
       this.userSubject.next(user);
     });
   }
 
+  private setPersistence() {
+    setPersistence(this.fireBaseAuth, browserLocalPersistence)
+      .then(() => {
+      })
+      .catch((error) => {
+      });
+  }
+
   isLoggedIn(): Observable<User | null> {
     return this.user$;
   }
+
   get currentUser(): User | null {
     return this.userSubject.value;
   }
+
 
   // Register a new user
   register(email: string, password: string, username: string): Observable<void> {

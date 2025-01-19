@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../Services/auth.service';
-import { map } from 'rxjs';
+import { map, catchError, of } from 'rxjs';
 
 export const isUserNotLoggedGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
@@ -14,7 +14,10 @@ export const isUserNotLoggedGuard: CanActivateFn = () => {
       } else {
         return router.createUrlTree(['/signin']); // Redirect to sign-in if not logged in
       }
+    }),
+    catchError(() => {
+      // In case of an error, we can redirect to a fallback page, like the sign-in page
+      return of(router.createUrlTree(['/signin']));
     })
   );
 };
-
